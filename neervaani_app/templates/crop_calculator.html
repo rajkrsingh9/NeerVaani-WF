@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crop Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.inline {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-group.inline select {
+            margin-left: 10px;
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Crop Calculator</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="crop_name">Crop Name:</label>
+                <input type="text" id="crop_name" name="crop_name" required>
+            </div>
+
+            <div class="form-group inline">
+                <label for="land_size">Land Size:</label>
+                <input type="number" id="land_size" name="land_size" step="0.01" required>
+                <select id="land_unit" name="land_unit" required>
+                    <option value="katha">Katha</option>
+                    <option value="acres">Acres</option>
+                    <option value="bigha">Bigha</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="irrigation_method">Irrigation Method:</label>
+                <select id="irrigation_method" name="irrigation_method" required>
+                    <option value="flood">Flood</option>
+                    <option value="drip">Drip</option>
+                    <option value="sprinkler">Sprinkler</option>
+                    <option value="surface">Surface</option>
+                    <option value="center_pivot">Center Pivot</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="rainfall_mm">Rainfall (mm):</label>
+                <input type="number" id="rainfall_mm" name="rainfall_mm" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="irrigation_cycles">Irrigation Cycles:</label>
+                <input type="number" id="irrigation_cycles" name="irrigation_cycles" required>
+            </div>
+
+            <div class="form-group">
+                <label for="crop_yield">Crop Yield (kg/acre):</label>
+                <input type="number" id="crop_yield" name="crop_yield" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fertilizer_use">Fertilizer Use (kg/acre):</label>
+                <input type="number" id="fertilizer_use" name="fertilizer_use" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="growing_season">Growing Season:</label>
+                <select id="growing_season" name="growing_season" required>
+                    <option value="summer">Summer</option>
+                    <option value="winter">Winter</option>
+                    <option value="monsoon">Monsoon</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="avg_temperature">Average Temperature (°C):</label>
+                <input type="number" id="avg_temperature" name="avg_temperature" step="0.1" required>
+            </div>
+
+            <button type="submit">Calculate</button>
+        </form>
+    </div>
+
+    <script>
+        // Request location access
+        navigator.geolocation.getCurrentPosition(position => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            
+            // Fetch weather data from Django API endpoint
+            fetch(`/api/weather?lat=${lat}&lon=${lon}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('rainfall_mm').value = data.rainfall;
+                    document.getElementById('avg_temperature').value = data.temperature;
+                })
+                .catch(error => console.error('Error fetching weather data:', error));
+        }, error => {
+            console.error('Error accessing location:', error);
+            alert('Please enable location access to auto-fill weather details.');
+        });
+    </script>
+</body>
+</html>

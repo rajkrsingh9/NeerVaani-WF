@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Product</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
+</head>
+<body>
+    <h1>Search for a Product</h1>
+    <form method="get">
+        <input type="text" name="name" placeholder="Enter product name" value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if products %}
+        <h2>Results:</h2>
+        <ul>
+            {% for product in products %}
+                <li>
+                    <strong>{{ product.product_name }}</strong><br>
+                    Green Water Footprint: {{ product.green_water_footprint }}<br>
+                    Blue Water Footprint: {{ product.blue_water_footprint }}<br>
+                    Grey Water Footprint: {{ product.grey_water_footprint }}<br>
+                    Total Water Footprint: {{ product.total_water_footprint }}<br>
+                    Description: {{ product.description }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% elif query %}
+        <p>No products found for "{{ query }}".</p>
+    {% endif %}
+</body>
+</html>

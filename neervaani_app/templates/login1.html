@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<script>
+    const container = document.getElementById('s-container');
+const registerBtn = document.getElementById('register');
+const loginBtn = document.getElementById('login');
+
+registerBtn.addEventListener('click', () => {
+    container.classList.add("active");
+});
+
+loginBtn.addEventListener('click', () => {
+    container.classList.remove("active");
+});
+</script>
+
+<div class="login-container sign-in">
+    <form method="POST" action="{% url 'login' %}">
+        <h1>Sign In</h1>
+        {% csrf_token %}
+        {% comment %} <label for="identifier">User ID or Email:</label> {% endcomment %}
+        <input type="text" id="identifier" name="identifier" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <p class="forgot-password">
+            <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+            <a href="{% url 'signup' %}">Create a new Account!!</a>
+        </p>
+        <button type="submit">Login</button>
+    </form>
+</div>
+<style>
+    
+    .forgot-password a {
+        font-size: 14px;
+        color: #007bff;
+        text-decoration: none;
+    }
+    .forgot-password a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}

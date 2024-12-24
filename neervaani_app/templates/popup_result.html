@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .results {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            display: inline-block;
+            padding: 15px;
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Water Footprint Results</h1>
+    <div class="results">
+        <p><strong>Total Water Footprint:</strong> {{ total_water }} liters</p>
+        <p><strong>Green Water Footprint:</strong> {{ green_water }} liters</p>
+        <p><strong>Blue Water Footprint:</strong> {{ blue_water }} liters</p>
+        <p><strong>Grey Water Footprint:</strong> {{ grey_water }} liters</p>
+    </div>
+</body>
+</html>

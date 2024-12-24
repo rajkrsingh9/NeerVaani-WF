@@ -1,0 +1,144 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NeerVaani{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/logo-black.png' %}" type="image/x-icon" />
+    
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <script src="{% static 'js/languageSwitcher.js' %}" defer></script>
+    <script src="{% static 'js/speechtotext.js' %}" defer></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Slick JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    
+    
+    <nav class="navbar" style="margin-bottom: 90px;">
+        <!-- Navbar similar to your HTML -->
+        
+            <div class="left-nav" href="{% url 'home' %}">
+                <img class="logo-img" src="{% static 'images/logo.png' %}" alt="Logo">
+                <h3>
+                    <span class="head1">Neer</span>
+                    <span class="head2">Vaani</span>
+                </h3>
+            </div>
+        
+            <div class="mid-nav">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'dashboard' %}">DASHBOARD</a></li>
+                <li><a href="blog.html">BLOG</a></li>
+                <li><a href="">OUR SERVICES</a></li>
+                {% comment %} <li><a href="{% url 'crop_calculator' %}">My Calculator</a></li> {% endcomment %}
+            </ul>
+        </div>
+        <div class="right-nav">
+            <ul>
+                
+                {% if request.session.user_id %}
+                    <li class="dropdown">
+                        <a href="#" class="profile-icon"><i class="bi bi-person-circle"></i></a>
+                        <div class="dropdown-menu invert-col">
+                            <a href="{% url 'view_profile' %}">View Profile</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <main>
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+        <div id="language-selector" class="no-translate" style="position: fixed; bottom: 10px; right: 10px;">
+            <label for="languageSelect">Select Language:</label>
+            <select id="languageSelect">
+                <option value="en" selected>English</option>
+                <option value="as">Assamese</option>
+                <option value="bn">Bengali</option>
+                <option value="en" selected>English</option>
+                <option value="gom">Konkani</option>
+                <option value="gu">Gujarati</option>
+                <option value="hi">Hindi</option>
+                <option value="kn">Kannada</option>
+                <option value="ks">Kashmiri</option>
+                <option value="mai">Maithili</option>
+                <option value="ml">Malayalam</option>
+                <option value="mr">Marathi</option>
+                <option value="ne">Napali</option>
+                <option value="or">Oriya</option>
+                <option value="pa">Panjabi</option>
+                <option value="sa">Sanskrit</option>
+                <option value="sd">Sindhi</option>
+                <option value="ta">Tamil</option>
+                <option value="te">Telugu</option>
+                <option value="ur">Urdu</option>
+
+            </select>
+        </div>
+
+
+
+         <!--FOOTER SECTION-->
+    <footer class="footer">
+      <div class="footer-container">
+          <!-- Logo and Name -->
+          <div class="footer-logo">
+              <img src="{% static 'images/logo-black.png' %}" alt="NeerVaani Logo" class="logo" />
+              <p class="website-name">NeerVaani</p>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="footer-links">
+              <h3>Quick Links</h3>
+              <ul>
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="card.html">Dashboard</a></li>
+                  <li><a href="services.html">Our Services</a></li>
+                  <li><a href="#contactus">Contact Us</a></li>
+              </ul>
+          </div>
+
+          <!-- Social Links -->
+          <div class="footer-social">
+              <h3>Follow Us</h3>
+              <div class="social-icons">
+                  <a href="#" target="_blank" class="social-link"><i class="bi bi-facebook"></i></a>
+                  <a href="#" target="_blank" class="social-link"><i class="bi bi-twitter"></i></a>
+                  <a href="#" target="_blank" class="social-link"><i class="bi bi-github"></i></a>
+                  <a href="#" target="_blank" class="social-link"><i class="bi bi-linkedin"></i></a>
+              </div>
+          </div>
+      </div>
+      <div class="footer-bottom">
+          <p>© 2024 NeerVaani. All rights reserved.</p>
+      </div>
+  </footer>
+  <button id="backToTop">↑</button>
+        
+    
+        <script src="{% static 'js/translation.js' %}"></script>
+        <script src="https://code.responsivevoice.org/responsivevoice.js?key=9NfiQptY"></script>
+
+    
+</body>
+</html>
+
+
+
+

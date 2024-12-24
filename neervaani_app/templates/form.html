@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industry Water Footprint Form</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        select, input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: #fff;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Industry Water Footprint Form</h1>
+        <form id="waterFootprintForm" method="post" action="">
+            {% csrf_token %}
+            
+            <label for="scale">Select Scale of Operations</label>
+            <select name="scale" id="scale" required>
+                <option value="Small">Small-scale</option>
+                <option value="Medium">Medium-scale</option>
+                <option value="Large">Large-scale</option>
+            </select>
+
+            <label for="textile_type">Select Type of Textile Products</label>
+            <select name="textile_type" id="textile_type" required>
+                <option value="Garments">Garments</option>
+                <option value="Home Textiles">Home Textiles</option>
+                <option value="Industrial Textiles">Industrial Textiles</option>
+                <option value="Others">Others</option>
+            </select>
+
+            <label for="production_output">Average Annual Production Output</label>
+            <input type="number" name="production_output" id="production_output" placeholder="Enter production output" required>
+
+            <label for="production_unit">Select Unit</label>
+            <select name="production_unit" id="production_unit" required>
+                <option value="kg">kg</option>
+                <option value="tons">tons</option>
+            </select>
+
+            <label for="raw_material">Select Type of Raw Materials</label>
+            <select name="raw_material" id="raw_material" required>
+                <option value="Cotton">Cotton</option>
+                <option value="Wool">Wool</option>
+                <option value="Polyester">Polyester</option>
+                <option value="Silk">Silk</option>
+                <option value="Rayon">Rayon/Viscose</option>
+                <option value="Synthetic">Other Synthetic Fibers</option>
+            </select>
+
+            <label>Are the raw materials produced in water-scarce regions?</label>
+            <select name="water_scarce_region" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label>Is rainfed or irrigated agriculture used for natural raw materials?</label>
+            <select name="agriculture_type" required>
+                <option value="Rainfed">Rainfed</option>
+                <option value="Irrigated">Irrigated</option>
+            </select>
+
+            <label for="processes">Primary Water-Intensive Processes</label>
+            <select name="processes" id="processes" multiple required>
+                <option value="Dyeing">Dyeing</option>
+                <option value="Bleaching">Bleaching</option>
+                <option value="Washing">Washing</option>
+                <option value="Printing">Printing</option>
+                <option value="Finishing">Finishing</option>
+            </select>
+
+            <label for="water_usage">Total Water Usage (per day/month/year)</label>
+            <input type="number" name="water_usage" id="water_usage" placeholder="Enter total water usage" required>
+
+            <label>Do you have an effluent treatment plant (ETP) for wastewater?</label>
+            <select name="etp" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="recycling_percent">Percentage of Water Recycled</label>
+            <select name="recycling_percent" id="recycling_percent" required>
+                <option value="Less than 25%">Less than 25%</option>
+                <option value="25–50%">25–50%</option>
+                <option value="51–75%">51–75%</option>
+                <option value="More than 75%">More than 75%</option>
+            </select>
+
+            <label for="disposal">How is the treated water disposed of?</label>
+            <select name="disposal" id="disposal" required>
+                <option value="Reused">Reused in production</option>
+                <option value="Released">Released into natural water bodies</option>
+                <option value="Municipal">Sent to a municipal treatment facility</option>
+            </select>
+
+            <label>Do you measure the chemical load in wastewater?</label>
+            <select name="chemical_load" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="dye_type">Type of Dyes and Chemicals Used</label>
+            <select name="dye_type" id="dye_type" required>
+                <option value="Natural">Natural dyes</option>
+                <option value="Synthetic">Synthetic dyes</option>
+                <option value="Biodegradable">Biodegradable chemicals</option>
+                <option value="Non-Biodegradable">Non-biodegradable chemicals</option>
+            </select>
+
+            <label>Are you compliant with local and international water management standards?</label>
+            <select name="water_standards" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label>Have you adopted water-efficient technologies?</label>
+            <select name="water_tech" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="measures">Measures Taken to Reduce Water Usage</label>
+            <select name="measures" id="measures" multiple required>
+                <option value="Meters">Installation of water meters</option>
+                <option value="Low-liquor">Low-liquor dyeing methods</option>
+                <option value="Reverse Osmosis">Reverse osmosis for recycling</option>
+                <option value="Awareness">Awareness and training programs</option>
+            </select>
+
+            <button type="submit">Submit and Calculate</button>
+        </form>
+    </div>
+</body>
+</html>

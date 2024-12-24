@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculation Result</title>
+</head>
+<body>
+    <h1>Result</h1>
+    <p><strong>User:</strong> {{ user.username }}</p>
+    <p><strong>Crop Name:</strong> {{ crop.crop_name }}</p>
+    <p><strong>Water Footprint:</strong> {{ crop.water_footprint }} liters per kg for 1 acre cultivation of {{ crop.crop_name }} .</p>
+    <a href="{% url 'crop_calculator' %}">Calculate Again</a>
+</body>
+</html>

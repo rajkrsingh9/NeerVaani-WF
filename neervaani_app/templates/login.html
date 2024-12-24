@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Signup - Neervaani{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+{% comment %} <script src="https://code.responsivevoice.org/responsivevoice.js?key=RaSI9kS4"></script> {% endcomment %}
+
+
+
+    <div class="s-container" id="s-container">
+        <div class="form-container sign-up">
+            <form method="post" action="{% url 'signup' %}">
+                <h1>Sign Up</h1>
+                {% csrf_token %}
+                <input type="text" name="userid" placeholder="Enter New User ID" onclick="responsiveVoice.speak('Enter New User ID')" required>
+                <input type="text" name="username" placeholder="Enter Your Name" onclick="responsiveVoice.speak('Enter Your Name')" required>
+                <input type="email" name="email" placeholder="Email" onclick="responsiveVoice.speak('Enter Your Email Id ')" required>
+                
+                <div class="imp-det">
+                    <input type="text" name="phone" placeholder="Phone Number" onclick="responsiveVoice.speak('Enter Your Phone Number')" required>
+                    <input type="password" name="password" placeholder="Password" onclick="responsiveVoice.speak('Create Your Password')" required>
+                </div>
+                <div class="user-det">
+                    <p>User Type</p>
+                    <select name="type_of_user" id="type_of_user" onclick="responsiveVoice.speak('Choose the type of User ')" >
+                        <option value="farmer" onclick="responsiveVoice.speak('Farmer')" >Farmer</option>
+                        <option value="organization" onclick="responsiveVoice.speak('Organization')" >Organization</option>
+                        <option value="normal user" onclick="responsiveVoice.speak('Normal User')" >Normal User</option>
+                    </select>
+                </div>
+                <input type="text" id="city" name="city" placeholder="City" onclick="responsiveVoice.speak('Enter Your City')" >
+                <div class="imp-det">
+                    <input type="text" id="state" name="state" placeholder="State" onclick="responsiveVoice.speak('Enter Your State')" >
+                    <input type="text" id="pincode" name="pincode" placeholder="Pincode" onclick="responsiveVoice.speak('Enter Your PinCode')" >
+                </div>
+                <button type="submit" onclick="responsiveVoice.speak('Form Submitted! Login to Continue')" >Signup</button>
+            </form>
+        </div>
+
+
+
+        <div class="login-container form-container sign-in">
+            <form method="POST" action="{% url 'login' %}" onclick="responsiveVoice.speak('')" >
+                <h1>Sign In</h1>
+                {% csrf_token %}
+                {% comment %} <label for="identifier">User ID or Email:</label> {% endcomment %}
+
+
+
+
+                <div class="input-group">
+                    <input type="text" placeholder="Name" id="signup-name">
+                    <button type="button" class="speech-button" data-input="signup-name"><i class="fas fa-microphone"></i></button>
+                  </div>
+
+
+
+
+                  <div class="input-group">
+                    <input type="text" id="identifier signup-name" name="identifier" placeholder="Enter User Id or Email" onclick="responsiveVoice.speak('')" required>
+                    <button type="button" class="speech-button" data-input="signup-name"><i class="fas fa-microphone"></i></button>
+                </div>
+                
+                
+                <input type="password" id="password" name="password" placeholder="Enter Password" onclick="responsiveVoice.speak('')" required>
+                
+                <p class="forgot-password">
+                    <a href="{% url 'forgot_password' %}" onclick="responsiveVoice.speak('')" >Forgot Password?</a>
+                    {% comment %} <a href="{% url 'signup' %}">Create a new Account!!</a> {% endcomment %}
+                </p>
+                <button type="submit" onclick="responsiveVoice.speak('')" >Login</button>
+            </form>
+        </div>
+
+
+        <div class="toggle-container">
+            <div class="toggle">
+              <div class="toggle-panel toggle-left">
+                <h1>Welcome Back!</h1>
+                <p>Enter your personal details to use all of site features</p>
+                <button class="hidden" id="login">Sign In</button>
+              </div>
+              <div class="toggle-panel toggle-right">
+                <h1>Hello, Friend!</h1>
+                <p>Register with your personal details to use all of site features</p>
+                <button class="hidden" id="register">Sign Up</button>
+              </div>
+            </div>
+          </div>
+
+
+
+    </div>
+
+
+
+    <script>
+        const container = document.getElementById('s-container');
+    const registerBtn = document.getElementById('register');
+    const loginBtn = document.getElementById('login');
+    
+    registerBtn.addEventListener('click', () => {
+        container.classList.add("active");
+    });
+    
+    loginBtn.addEventListener('click', () => {
+        container.classList.remove("active");
+    });
+
+
+    
+    
+
+    </script>
+{% endblock %}

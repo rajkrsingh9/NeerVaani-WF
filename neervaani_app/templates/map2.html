@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeerVaani - Water Footprint Insights</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Parkinsans:wght@300..800&display=swap');
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #f4f4f9;
+        }
+
+        .map-container {
+            width: 70%;
+            height: 100%;
+            border-right: 2px solid #ddd;
+        }
+
+        .details-container {
+            width: 30%;
+            height: 100%;
+            overflow-y: auto;
+            background-color: #233954;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+        }
+
+        h3 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .region-details {
+            flex-grow: 1;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-top: 20px;
+        }
+
+        .region-card {
+            background: #111;
+            color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .region-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .region-card h4 {
+            margin-bottom: 5px;
+        }
+
+        .region-card p {
+            font-size: 14px;
+            margin: 2px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="map-container" id="map-section"></div>
+    <div class="details-container">
+        <h3>Water Footprint Insights</h3>
+        <div id="region-details" class="region-details">Click on a region to view details.</div>
+        <div class="chart-container">
+            <canvas id="footprintChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Leaflet.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+
+    <script>
+        // Region data for India with footprints in m³/ton
+        const regions = [
+            { name: "Kerala", color: "green", surfaceWater: "Abundant", groundwater: "Stable", crops: ["Rice", "Coconut", "Banana"], greenFootprint: 1.0, blueFootprint: 0.5, greyFootprint: 0.3, latLng: [10.8505, 76.2711] },
+            { name: "Maharashtra", color: "red", surfaceWater: "Critical", groundwater: "Depleted", crops: ["Sugarcane", "Cotton", "Jowar"], greenFootprint: 0.6, blueFootprint: 1.2, greyFootprint: 0.8, latLng: [19.7515, 75.7139] },
+            { name: "Punjab", color: "orange", surfaceWater: "Sufficient", groundwater: "Overexploited", crops: ["Wheat", "Rice", "Maize"], greenFootprint: 0.8, blueFootprint: 0.7, greyFootprint: 0.5, latLng: [31.1471, 75.3412] },
+            { name: "Tamil Nadu", color: "yellow", surfaceWater: "Low", groundwater: "Critical", crops: ["Millets", "Groundnuts", "Pulses"], greenFootprint: 0.4, blueFootprint: 1.0, greyFootprint: 0.6, latLng: [11.1271, 78.6569] },
+            { name: "Rajasthan", color: "brown", surfaceWater: "Scarce", groundwater: "Depleted", crops: ["Bajra", "Guar", "Mustard"], greenFootprint: 0.3, blueFootprint: 0.9, greyFootprint: 0.5, latLng: [27.0238, 74.2179] },
+            { name: "West Bengal", color: "blue", surfaceWater: "Abundant", groundwater: "Stable", crops: ["Rice", "Jute", "Tea"], greenFootprint: 1.2, blueFootprint: 0.4, greyFootprint: 0.3, latLng: [22.9868, 87.8550] },
+            { name: "Uttar Pradesh", color: "purple", surfaceWater: "Moderate", groundwater: "Moderate", crops: ["Sugarcane", "Rice", "Potatoes"], greenFootprint: 0.7, blueFootprint: 0.6, greyFootprint: 0.4, latLng: [26.8467, 80.9462] },
+            { name: "Gujarat", color: "cyan", surfaceWater: "Low", groundwater: "Critical", crops: ["Cotton", "Groundnut", "Mustard"], greenFootprint: 0.5, blueFootprint: 0.8, greyFootprint: 0.7, latLng: [22.2587, 71.1924] },
+            { name: "Bihar", color: "pink", surfaceWater: "Abundant", groundwater: "Stable", crops: ["Rice", "Maize", "Lentils"], greenFootprint: 1.1, blueFootprint: 0.5, greyFootprint: 0.4, latLng: [25.0961, 85.3131] },
+            { name: "Haryana", color: "green", surfaceWater: "Moderate", groundwater: "Overexploited", crops: ["Rice", "Cotton", "Wheat"], greenFootprint: 0.6, blueFootprint: 0.9, greyFootprint: 0.7, latLng: [29.0588, 76.0856] },
+            { name: "Madhya Pradesh", color: "lightgreen", surfaceWater: "Sufficient", groundwater: "Depleted", crops: ["Wheat", "Rice", "Gram"], greenFootprint: 0.75, blueFootprint: 0.65, greyFootprint: 0.55, latLng: [23.4731, 77.9479] },
+            { name: "Andhra Pradesh", color: "lightblue", surfaceWater: "Moderate", groundwater: "Critical", crops: ["Rice", "Chilies", "Cotton"], greenFootprint: 0.95, blueFootprint: 0.85, greyFootprint: 0.6, latLng: [15.9129, 79.7399] },
+            { name: "Odisha", color: "green", surfaceWater: "Abundant", groundwater: "Stable", crops: ["Rice", "Mustard", "Mango"], greenFootprint: 1.2, blueFootprint: 0.6, greyFootprint: 0.4, latLng: [20.9414, 85.7486] },
+            { name: "Chhattisgarh", color: "yellow", surfaceWater: "Sufficient", groundwater: "Stable", crops: ["Rice", "Pulses", "Maize"], greenFootprint: 1.1, blueFootprint: 0.5, greyFootprint: 0.3, latLng: [21.2787, 81.6550] },
+            { name: "Assam", color: "brown", surfaceWater: "Abundant", groundwater: "Stable", crops: ["Rice", "Tea", "Mustard"], greenFootprint: 1.0, blueFootprint: 0.4, greyFootprint: 0.3, latLng: [26.2006, 92.9376] },
+            { name: "Jharkhand", color: "red", surfaceWater: "Low", groundwater: "Critical", crops: ["Rice", "Pulses", "Mustard"], greenFootprint: 0.6, blueFootprint: 1.2, greyFootprint: 0.7, latLng: [23.3441, 85.3131] },
+            { name: "Karnataka", color: "purple", surfaceWater: "Moderate", groundwater: "Moderate", crops: ["Rice", "Ragi", "Sugarcane"], greenFootprint: 0.8, blueFootprint: 0.7, greyFootprint: 0.6, latLng: [15.3173, 75.7138] },
+            { name: "Mizoram", color: "orange", surfaceWater: "Abundant", groundwater: "Stable", crops: ["Rice", "Chili", "Aloe Vera"], greenFootprint: 1.2, blueFootprint: 0.5, greyFootprint: 0.4, latLng: [23.1645, 92.9376] },
+            { name: "Sikkim", color: "pink", surfaceWater: "Abundant", groundwater: "Stable", crops: ["Rice", "Maize", "Cardamom"], greenFootprint: 1.0, blueFootprint: 0.3, greyFootprint: 0.2, latLng: [27.5330, 88.5122] },
+            { name: "Goa", color: "blue", surfaceWater: "Abundant", groundwater: "Stable", crops: ["Rice", "Coconut", "Cashew"], greenFootprint: 0.9, blueFootprint: 0.4, greyFootprint: 0.3, latLng: [15.2993, 74.1240] }
+        ];
+
+        // Create the Leaflet map
+        const map = L.map('map-section').setView([20.5937, 78.9629], 5); // Centered on India
+
+        // Set up the OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Add markers for each region with color-coded circles
+        regions.forEach(region => {
+            const circle = L.circle(region.latLng, {
+                color: region.color,
+                fillColor: region.color,
+                fillOpacity: 0.5,
+                radius: 80000
+            }).addTo(map);
+
+            // Popup showing region name
+            circle.bindPopup(`<b>${region.name}</b>`);
+
+            // Click event to display region details
+            circle.on('click', function () {
+                document.getElementById('region-details').innerHTML = `
+          <div class="region-card">
+            <h4>${region.name}</h4>
+            <p><strong>Surface Water:</strong> ${region.surfaceWater}</p>
+            <p><strong>Groundwater:</strong> ${region.groundwater}</p>
+            <p><strong>Crops:</strong> ${region.crops.join(", ")}</p>
+          </div>
+          <div>
+            <p><strong>Green Water Footprint:</strong> ${region.greenFootprint} m³/ton</p>
+            <p><strong>Blue Water Footprint:</strong> ${region.blueFootprint} m³/ton</p>
+            <p><strong>Grey Water Footprint:</strong> ${region.greyFootprint} m³/ton</p>
+          </div>
+        `;
+                // Update the chart with new data
+                updateChart(region.greenFootprint, region.blueFootprint, region.greyFootprint);
+            });
+        });
+
+        // Chart.js code to display the water footprints
+        const ctx = document.getElementById('footprintChart').getContext('2d');
+        const footprintChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Green Water', 'Blue Water', 'Grey Water'],
+                datasets: [{
+                    label: 'Water Footprint (m³/ton)',
+                    data: [0, 0, 0], // Default data
+                    backgroundColor: ['#2ecc71', '#3498db', '#a6aebf'],
+                    borderColor: ['#27ae60', '#2980b9', '#a6aebf'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Function to update the chart with new values
+        function updateChart(green, blue, grey) {
+            footprintChart.data.datasets[0].data = [green, blue, grey];
+            footprintChart.update();
+        }
+    </script>
+</body>
+
+</html>

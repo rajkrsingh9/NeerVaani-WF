@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Your Water Footprint Calculator{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/calculator.css' %}">
+
+<div class="mycalculator">
+<h1>Calculate Your Water Footprint</h1>
+    <form id="water-footprint-form">
+        {% csrf_token %}
+        <label>Name: <input type="text" name="name" required></label>
+        <label>Daily water consumption (liters): <input type="number" name="drinking_water" required></label>
+        <label>Showering time (minutes): <input type="number" name="shower_minutes"></label>
+        <label>Bucket size (liters): <input type="number" name="bucket_size"></label>
+        <label>Number of buckets: <input type="number" name="buckets"></label>
+        <label>Clothes washing (weekly): <input type="number" name="clothes_washing"></label>
+        <label>Washing machine water (liters per wash): <input type="number" name="washing_machine_water"></label>
+        <label>Toilet flushes per day: <input type="number" name="toilet_flushes" required></label>
+        <label>Daily cooking water (liters): <input type="number" name="cooking_water" required></label>
+        <label>Vehicle washing (liters per wash): <input type="number" name="vehicle_wash"></label>
+        <label>Rice (cups per week): <input type="number" name="rice" required></label>
+        <label>Wheat (rotis per week): <input type="number" name="wheat" required></label>
+        <label>Fruits and Vegetables (kg per week): <input type="number" name="fruits_vegetables" required></label>
+        <label>Milk (liters per week): <input type="number" name="milk" required></label>
+        <label>Eggs (number per week): <input type="number" name="eggs" required></label>
+        <label>New clothes purchased (yearly): <input type="number" name="clothes_yearly"></label>
+        <button type="submit">Calculate</button>
+    </form>
+
+    <!-- Popup Dialog -->
+    <div class="dim-background"></div>
+    <div class="popup" id="result-popup">
+        <h2>Your Yearly Water Footprint</h2>
+        <p id="direct-water">Direct Water Usage: </p>
+        <p id="indirect-water">Indirect Water Usage: </p>
+        <p id="total-water">Total Water Footprint: </p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+</div>
+    <script>
+        const form = document.getElementById('water-footprint-form');
+        const popup = document.getElementById('result-popup');
+        const dimBackground = document.querySelector('.dim-background');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            const response = await fetch('{% url "mycalculator" %}', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await response.json();
+
+            document.getElementById('direct-water').textContent = `Direct Water Usage: ${data.direct_usage} liters`;
+            document.getElementById('indirect-water').textContent = `Indirect Water Usage: ${data.indirect_usage} liters`;
+            document.getElementById('total-water').textContent = `Total Water Footprint: ${data.total_water_footprint} liters`;
+
+            popup.style.display = 'block';
+            dimBackground.style.display = 'block';
+        });
+
+        function closePopup() {
+            popup.style.display = 'none';
+            dimBackground.style.display = 'none';
+        }
+    </script>
+    
+    {% endblock %}

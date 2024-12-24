@@ -1,0 +1,277 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Parkinsans:wght@300..800&display=swap');
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Parkinsans", sans-serif;
+}
+
+.navbar a{
+    text-decoration: none;
+}
+
+ /* navbar  ............................    base.html */
+.navbar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 30px;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.left-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-nav h3{
+    color: #0E3386;
+    /* font-family:'Times New Roman', Times, serif; */
+    font-size: 1.8rem;
+}
+
+
+.mid-nav ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.mid-nav ul li{
+    list-style: none;
+}
+
+.mid-nav ul li a{
+    text-decoration: none;
+    color: #034694;
+    font-weight: 600;
+    font-size: 1rem;
+    font-size: 1rem;
+    padding: 1vw 10px;
+}
+
+.right-nav ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    border: 1px solid #034694 ;
+    background-color: #034694;
+    padding: 10px 20px;
+    border-radius:25px;
+    
+}
+
+.right-nav ul li{
+    list-style: none;
+}
+
+.right-nav ul li a{
+    text-decoration: none;
+    color: white;
+
+}
+
+.logo-img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.boxes{
+   display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(2,1fr);
+    margin-top:80px;
+    
+}
+.card1{
+    width: 420px;
+    height: 450px;
+    border: 1px solid none; 
+    border-radius: 30px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgb(80, 80, 80);
+    margin-left: 160px;
+
+}
+
+.card1 h1 {
+    color: #0f509b;
+    text-align: center;
+}
+.card1 h3{
+    text-align: center;
+    font-family: Spectral, serif;
+    color:#0f509b;
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+.card1 p{
+    font-family: Spectral, serif;
+    color: rgba(37, 41, 100, 0.9);
+    line-height: 1.8rem;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 1.2rem;
+}
+.card1 a{
+    text-decoration: none;
+    color: white;
+}
+.card1 h5{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.3rem;
+}
+.card2{
+    width: 420px;
+    height: 450px;
+    border: 1px solid none; 
+    border-radius: 30px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgb(80, 80, 80);
+    margin-left: 70px;
+    
+}
+
+.card2 h1 {
+    color: #0f509b;
+    text-align: center;
+}
+.card2 h3{
+    text-align: center;
+    font-family: Spectral, serif;
+    color:#0f509b;
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+.card2 p{
+    font-family: Spectral, serif;
+    color: rgba(37, 41, 100, 0.9);
+    line-height: 1.8rem;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+}
+.card2 a{
+    text-decoration: none;
+    color: white;
+}
+.card2 h5{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.3rem;
+}
+.card3{
+    width: 420px;
+    height: 450px;
+    border: 1px solid none; 
+    border-radius: 30px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgb(80, 80, 80);;
+    margin-left: 160px;
+    margin-top: 30px;
+
+}
+.card3 h1 {
+    color: #0f509b;
+    text-align: center;
+}
+.card3 h3{
+    text-align: center;
+    font-family: Spectral, serif;
+    color:#0f509b;
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+.card3 p{
+    font-family: Spectral, serif;
+    color: rgba(37, 41, 100, 0.9);
+    line-height: 1.8rem;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+}
+.card3 a{
+    text-decoration: none;
+    color: white;
+}
+.card3 h5{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.3rem;
+}
+
+.card4{
+    width: 420px;
+    height: 450px;
+    border: 1px solid none; 
+    border-radius: 30px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgb(80, 80, 80);;
+    margin-left: 70px;
+    margin-top: 30px;
+
+}
+.card4 h1 {
+    color: #0f509b;
+    text-align: center;
+}
+.card4 h3{
+    text-align: center;
+    font-family: Spectral, serif;
+    color:#0f509b;
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+.card4 p{
+    font-family: Spectral, serif;
+    color: rgba(37, 41, 100, 0.9);
+    line-height: 1.8rem;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-bottom: 60px;
+    font-size: 1.2rem;
+}
+.card4 a{
+    text-decoration: none;
+    color: white;
+}
+.card4 h5{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.3rem;
+}
+.exp-btn button{
+    border: none;
+    background-color: #0f509b;
+    color:white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 40px;
+    margin-left: 110px;
+}
+.exp-btn button a{
+    text-decoration: none;
+    color: white;
+}
+
+*::-webkit-scrollbar{
+    width: 0.25rem;
+    height: 0.25rem;
+    -webkit-transition: all ease 0.3s;
+    transition: all ease 0.3s;
+    }

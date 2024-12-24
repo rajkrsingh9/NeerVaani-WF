@@ -1,0 +1,312 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crop Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Slick Carousel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Parkinsans:wght@300..800&display=swap');
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Parkinsans", sans-serif;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="agri-section">
+        <form method="post">
+            {% csrf_token %}
+            
+                <!-- Slide 1: Crop Name -->
+                
+                    
+                    
+                        
+                        <p>What is the crop name?</p>
+                    </div>
+                    <div class="name-input">
+                        <input type="text" id="crop_name" name="crop_name" required>
+                    </div>
+                    <button type="button" class="custom-btn next-slide">
+                        <img src="{% static 'images/arrow-right.png' %}" alt="">
+                    </button>
+                </div>
+            <div class="form-group">
+                <label for="crop_name">Crop Name:</label>
+                <input type="text" id="crop_name" name="crop_name" required>
+            </div>
+
+            <!-- Slide 2: Land Size -->
+            <div class="slide">
+                <div class="cal-part1">
+                    <img src="{% static 'images/farmhouse.png' %}" alt="">
+                    <p>Land size</p>
+                </div>
+                <div class="land-size">
+                    <img src="{% static 'images/land-size.png' %}" alt="">
+                    <p>What is the size of land?</p>
+                </div>
+                <input type="number" id="land_size" name="land_size" step="0.01" required>
+                <select id="land_unit" name="land_unit" class="buttons" required>
+                    <option value="katha" class="custom-btn mins land-unit">Katha</option>
+                    <option value="acres" class="custom-btn mins land-unit">Acres</option>
+                    <option value="bigha" class="custom-btn mins land-unit">Bigha</option>
+                </select>
+                <button type="button" class="custom-btn prev-slide"><img src="{% static 'images/left-chevron.png' %}" alt=""></button>
+                <button type="button" class="custom-btn next-slide"><img src="{% static 'images/arrow-right.png' %}" alt=""></button>
+            </div>
+
+
+
+
+            {% comment %} <div class="form-group inline">
+                <label for="land_size">Land Size:</label>
+                <input type="number" id="land_size" name="land_size" step="0.01" required>
+                <select id="land_unit" name="land_unit" required>
+                    <option value="katha">Katha</option>
+                    <option value="acres">Acres</option>
+                    <option value="bigha">Bigha</option>
+                </select>
+            </div> {% endcomment %}
+
+
+
+
+                <!-- Slide 3: Irrigation Method -->
+
+            <div class="slide">
+                <div class="cal-part1">
+                    <img src="{% static 'images/agriculture.png' %}" alt="">
+                    <p>Irrigation Method</p>
+                </div>
+                <div class="land-size">
+                    <img src="{% static 'images/irrigation.png' %}" alt="">
+                    <p>What type of irrigation method is used?</p>
+                </div>
+                <select class="buttons" id="irrigation_method" name="irrigation_method" required>
+                    <option value="flood" class="custom-btn mins irrigation-method">Flood</option>
+                    <option value="drip" class="custom-btn mins irrigation-method">Drip</option>
+                    <option value="sprinkler" class="custom-btn mins irrigation-method">Sprinkler</option>
+                    <option value="surface" class="custom-btn mins irrigation-method">Surface</option>
+                    <option value="center_pivot" class="custom-btn mins irrigation-method">Center Pivot</option>
+                </select>
+                <button type="button" class="custom-btn prev-slide"><img src="{% static 'images/left-chevron.png' %}" alt=""></button>
+                <button type="button" class="custom-btn next-slide"><img src="{% static 'images/arrow-right.png' %}" alt=""></button>
+            </div>
+
+
+
+             <!-- Slide 5: Rainfall -->
+            <div class="slide">
+                <div class="cal-part1">
+                    <img src="{% static 'images/rainfall (1).png' %}" alt="">
+                    <p>Rainfall</p>
+                </div>
+                <div class="land-size">
+                    <img src="{% static 'images/rainfall-farm.png' %}" alt="">
+                    <p>Rainfall (mm)?</p>
+                </div>
+                <div class="number-box">
+                
+                    <input type="number" id="rainfall_mm rainfall" name="rainfall_mm" step="0.01" required>
+
+                </div>  
+                <button type="button" class="custom-btn prev-slide"><img src="{% static 'images/left-chevron.png' %}" alt=""></button>
+                <button type="button" class="custom-btn next-slide"><img src="{% static 'images/arrow-right.png' %}" alt=""></button>
+            </div>
+
+
+
+            <div class="slide">
+                <div class="cal-part1">
+                    <img src="{% static 'images/water (1).png' %}" alt="">
+                    <p>Irrigation Cycles</p>
+                </div>
+                <div class="land-size">
+                    <img src="{% static 'images/irrigation-farm.png' %}" alt="">
+                    <p>What are the number of irrigation cycles?</p>
+                </div>
+                <div class="number-box">
+                    <input type="number" id="irrigation_cycles temperature" name="irrigation_cycles" required>
+                </div>
+                <button class="custom-btn prev-slide"><img src="{% static 'images/left-chevron.png' %}" alt=""></button>
+                <button class="custom-btn next-slide"><img src="{% static 'images/arrow-right.png' %}" alt=""></button>
+            </div>
+
+
+
+            <div class="slide">
+                <div class="cal-part1">
+                    <img src="{% static 'images/crops-analytics.png' %}" alt="">
+                    <p>Crop Yield</p>
+                </div>
+                <div class="land-size">
+                    <img src="{% static 'images/crop-yeild.png' %}" alt="">
+                    <p>What is Crop Yield in (kg/acre)?</p>
+                </div>
+                <div class="number-box">
+                    <input type="number" id="crop_yield" name="crop_yield" step="0.01" required>
+                </div>
+                <button class="custom-btn prev-slide"><img src="{% static 'images/left-chevron.png' %}" alt=""></button>
+                <button class="custom-btn next-slide"><img src="{% static 'images/arrow-right.png' %}" alt=""></button>
+            </div>
+
+
+
+
+
+            <div class="slide">
+                <div class="cal-part1">
+                    <img src="images/fertilizer.png" alt="">
+                    <p>Fertilizer Usage</p>
+                </div>
+                <div class="land-size">
+                    <img src="images/fertilizer-farm.png" alt="">
+                    <p>Fertilizer Usage in (kg/acre)?</p>
+                </div>
+                <div class="number-box">
+                    <input type="number" id="fertilizer_use" name="fertilizer_use" step="0.01" required>
+                </div>
+                    <button class="custom-btn prev-slide"><img src="images/left-chevron.png" alt=""></button>
+                    <button class="custom-btn next-slide"><img src="images/arrow-right.png" alt=""></button>
+            </div>
+
+
+            {% comment %} <div class="form-group">
+                <label for="fertilizer_use">Fertilizer Use (kg/acre):</label>
+                <input type="number" id="fertilizer_use" name="fertilizer_use" step="0.01" required>
+            </div> {% endcomment %}
+
+            <!-- Slide 4: Growing Season -->
+
+            <div class="slide">
+                <div class="cal-part1">
+                    <img src="{% static 'images/season (1).png' %}" alt="">
+                    <p>Growing Season</p>
+                </div>
+                <div class="land-size">
+                    <img src="{% static 'images/season-farm.png' %}" alt="">
+                    <p>Type of growing season?</p>
+                </div>
+                <select class="buttons" id="growing_season" name="growing_season" required>
+                    <option value="summer" class="custom-btn mins season">Summer</option>
+                    <option value="winter" class="custom-btn mins season">Winter</option>
+                    <option value="monsoon" class="custom-btn mins season">Monsoon</option>
+                </select>
+                <button type="button" class="custom-btn prev-slide"><img src="{% static 'images/left-chevron.png' %}" alt=""></button>
+                <button type="button" class="custom-btn next-slide"><img src="{% static 'images/arrow-right.png' %}" alt=""></button>
+            </div>
+
+
+            {% comment %} <div class="form-group">
+                <label for="growing_season">Growing Season:</label>
+                <select id="growing_season" name="growing_season" required>
+                    <option value="summer">Summer</option>
+                    <option value="winter">Winter</option>
+                    <option value="monsoon">Monsoon</option>
+                </select>
+            </div> {% endcomment %}
+
+
+            <div class="slide">
+                <div class="cal-part1">
+                    <img src="images/high-temperature.png" alt="">
+                    <p>Temperature</p>
+                </div>
+                <div class="land-size">
+                    <img src="images/temp-farm.png" alt="">
+                    <p>What is the temperature in (°C)?</p>
+                </div>
+                <div class="number-box">
+                    <input class="styled-number-input" type="number" id="avg_temperature temperature" name="avg_temperature" step="0.1" required>
+                </div>
+                <button class="custom-btn prev-slide"><img src="images/left-chevron.png" alt=""></button>
+                <button class="custom-btn next-slide"><img src="images/arrow-right.png" alt=""></button>
+            </div>
+
+
+
+
+{% comment %}             
+
+            <div class="form-group">
+                <label for="avg_temperature">Average Temperature (°C):</label>
+                <input type="number" id="avg_temperature" name="avg_temperature" step="0.1" required>
+            </div> {% endcomment %}
+
+
+            <!-- Submit Button -->
+            <div class="slide">
+                <button type="submit" class="custom-btn">Calculate</button>
+            </div>
+
+
+
+
+        </form>
+    </div>
+
+
+    <script>
+
+        $(document).ready(function () {
+            const $slider = $('.slider-container');
+        
+            $slider.slick({
+                dots: true,
+                infinite: false,
+                speed: 600,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                draggable: false
+            });
+        
+            // Validate current slide inputs
+            const validateSlide = () => {
+                const $currentSlide = $('.slick-active');
+                const $requiredInputs = $currentSlide.find('input[required]');
+                let isValid = true;
+        
+                $requiredInputs.each(function () {
+                    if (!$(this).val()) {
+                        isValid = false;
+                        alert('Please fill out all required fields!');
+                        return false;
+                    }
+                });
+        
+                return isValid;
+            };
+        
+            // Next slide button
+            $(document).on('click', '.next-slide', function () {
+                if (validateSlide()) {
+                    $slider.slick('slickNext');
+                }
+            });
+        
+            // Previous slide button
+            $(document).on('click', '.prev-slide', function () {
+                $slider.slick('slickPrev');
+            });
+        
+            // Handle custom buttons for land units and others
+            $('.land-unit, .irrigation-method, .season').on('click', function () {
+                const $input = $(this).siblings('input[type="hidden"]');
+                $input.val($(this).text());
+            });
+        });
+        
+    </script>
+
+</body>
+</html>

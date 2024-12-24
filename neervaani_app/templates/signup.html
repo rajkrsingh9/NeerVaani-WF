@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Signup - Neervaani{% endblock %}
+
+{% block content %}
+<script>
+    const container = document.getElementById('s-container');
+const registerBtn = document.getElementById('register');
+const loginBtn = document.getElementById('login');
+
+registerBtn.addEventListener('click', () => {
+    container.classList.add("active");
+});
+
+loginBtn.addEventListener('click', () => {
+    container.classList.remove("active");
+});
+</script>
+
+
+    <h1>Signup</h1>
+    <div class="s-container" id="s-container">
+        <div class="form-container sign-up">
+            <form method="post">
+                <h1>Sign Up</h1>
+                {% csrf_token %}
+                <input type="text" name="userid" placeholder="User ID" required>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="phone" placeholder="Phone Number" required>
+                <div class="imp-det">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="user-det">
+                    <p>User Type</p>
+                    <select name="type_of_user">
+                        <option value="farmer">Farmer</option>
+                        <option value="organization">Organization</option>
+                        <option value="normal user">Normal User</option>
+                    </select>
+                </div>
+                <input type="text" id="city" name="city" placeholder="City">
+                <input type="text" id="state" name="state" placeholder="State">
+                <input type="text" id="pincode" name="pincode" placeholder="Pincode">
+                <button type="submit">Signup</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

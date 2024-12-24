@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard {% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+
+{% comment %} <div class="container-dashboard">
+    <div class="grid">
+        <div class="card">
+            <h3>Calculate Your Own Water Footprint</h3>
+            <h1><i class="bi bi-calculator"></i></h1>
+            <p>You can calculate your water footprint to gain insight into the total water consumed in producing
+                the
+                goods and services you rely on, empowering you to make more sustainable choices and reduce your
+                environmental impact.</p>
+            <div class="exp-btn">
+                <button>
+                    <a href="{% url 'mycalculator' %}">Get Started<i class="bi bi-arrow-right"></i></a>
+                </button>
+            </div>
+            <br>
+        </div>
+        <div class="card">
+            <h3>Calculate Water Footprint For Your Crop</h3>
+            <h1><i class="bi bi-calculator"></i></h1>
+            <p>You can calculate water footprint of any agricultural crop with some basic infos to gain insight into the total water consumed in producing
+                the goods and services you rely on, empowering you to make more sustainable choices and reduce your
+                environmental impact.</p>
+            <div class="exp-btn">
+                <button><a href="{% url 'crop_calculator' %}">Get Started<i class="bi bi-arrow-right"></i></a></button>
+            </div>
+            <br>
+        </div>
+        <div class="card">
+            <h3>Water Footprints of Agricultural Products</h3>
+            <h1><i class="bi bi-calendar2-minus-fill"></i></h1>
+            <p>Water footprints of agricultural products represent the total volume of water used to grow,
+                process, and transport crops and livestock.Understanding these footprints helps highlight the
+                water-intensive nature of certain products and encourages efficient water use in agriculture.
+            </p>
+            <div class="exp-btn">
+                <button><a href="{% url 'search_product'  %}">Get Started<i class="bi bi-arrow-right"></i></a></button>
+            </div>
+            <br>
+        </div>
+        <div class="card">
+            <h3>Regional Water Insights</h3>
+            <h1><i class="bi bi-droplet-fill"></i></h1>
+            <p>Discover comprehensive data on surface and groundwater availability in your region. Leverage
+                these insights to make informed decisions and optimize agricultural planning for sustainable
+                water management.
+            </p>
+            <div class="exp-btn">
+                <button><a href="">Get Started<i class="bi bi-arrow-right"></i></a></button>
+            </div>
+            <br>
+        </div>
+        <div class="card">
+            <h3>Best Crop Recommendations</h3>
+            <h1><i class="bi bi-bar-chart-line-fill"></i></h1>
+            <p>Receive customized crop suggestions based on your region’s water availability, soil type, and
+                farming practices, ensuring sustainable and efficient farming for better yields.
+            </p>
+            <div class="exp-btn">
+                <button><a href="">Get Started<i class="bi bi-arrow-right"></i></a></button>
+            </div>
+            <br>
+        </div>
+    </div>
+
+</div> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+    <div class="boxes">
+        <div class="card1">
+            <h3>Calculate Your Own Water Footprint</h3>
+            <h1><i class="bi bi-calculator"></i></h1>
+            <p>You can calculate your water footprint to gain insight into the total water consumed in producing
+                the
+                goods and services you rely on, empowering you to make more sustainable choices and reduce your
+                environmental impact.</p>
+            <div class="exp-btn">
+                    <button><a href="{% url 'mycalculator' %}">Get Started<i class="bi bi-arrow-right"></i></a></button>
+            </div>
+            <br>
+        </div>
+        <div class="card2">
+            <h3>Water Footprints of Agricultural Products</h3>
+            <h1><i class="bi bi-calendar2-minus-fill"></i></h1>
+            <p>Water footprints of agricultural products represent the total volume of water used to grow,
+                process, and transport crops and livestock.Understanding these footprints helps highlight the
+                water-intensive nature of certain products and encourages efficient water use in agriculture.
+            </p>
+            <div class="exp-btn">
+                <button><a href="{% url 'crop_calculator' %}">Get Started<i class="bi bi-arrow-right"></i></a></button>
+        </div>
+            <br>
+        </div>
+        <div class="card3">
+            <h3>Regional Water Insights</h3>
+            <h1><i class="bi bi-droplet-fill"></i></h1>
+            <p>Discover comprehensive data on surface and groundwater availability in your region. Leverage
+                these insights to make informed decisions and optimize agricultural planning for sustainable
+                water management.
+            </p>
+            <div class="exp-btn">
+                <button><a href="{% url 'search_product'  %}">Get Started<i class="bi bi-arrow-right"></i></a></button>
+        </div>
+            <br>
+        </div>
+        <div class="card4">
+            <h3>Best Crop Recommendations</h3>
+            <h1><i class="bi bi-bar-chart-line-fill"></i></h1>
+            <p>Receive customized crop suggestions based on your region’s water availability, soil type, and
+                farming practices, ensuring sustainable and efficient farming for better yields.
+            </p>
+            <div class="exp-btn">
+                <button><a href="">Get Started<i class="bi bi-arrow-right"></i></a></button>
+        </div>
+            <br>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
